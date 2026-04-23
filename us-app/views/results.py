@@ -78,7 +78,6 @@ def _pillar_section(partner: dict, slot: str, other_name: str):
     for pillar in pillars:
         pid = pillar["id"]
         pname = pillar["name"]
-        pdesc = pillar.get("description", "")
         score_val = scores_dict.get(pid, {}).get("value", 3)
         state = analysis.score_state(score_val)
 
@@ -91,11 +90,6 @@ def _pillar_section(partner: dict, slot: str, other_name: str):
             f"<span style='font-family:Playfair Display,serif;font-size:1.1rem;font-weight:600;margin-left:0.5rem'>{pname}</span></div>",
             unsafe_allow_html=True,
         )
-        if pdesc:
-            st.markdown(
-                f"<p style='color:#8C6E5D;font-size:0.88rem;margin:0.2rem 0 0.5rem 0'>{pdesc}</p>",
-                unsafe_allow_html=True,
-            )
         st.markdown(
             f"<div style='margin-bottom:0.8rem'>{_score_indicator(score_val)}</div>",
             unsafe_allow_html=True,
@@ -107,9 +101,17 @@ def _pillar_section(partner: dict, slot: str, other_name: str):
             f"What {other_name} can do</p>",
             unsafe_allow_html=True,
         )
-        actions = analysis.get_actions(pname, name, count=6)
-        actions_html = "".join(styles.action_bullet(a) for a in actions)
-        st.markdown(actions_html, unsafe_allow_html=True)
+
+        examples = pillar.get("examples", [])
+        if examples:
+            # Display user-provided examples
+            actions_html = "".join(styles.action_bullet(ex) for ex in examples if ex)
+            st.markdown(actions_html, unsafe_allow_html=True)
+        else:
+            # Fall back to template actions if examples are not present (old data)
+            actions = analysis.get_actions(pname, name, count=6)
+            actions_html = "".join(styles.action_bullet(a) for a in actions)
+            st.markdown(actions_html, unsafe_allow_html=True)
 
         st.markdown("</div>", unsafe_allow_html=True)
         st.markdown("<div style='margin-bottom:0.8rem'></div>", unsafe_allow_html=True)
