@@ -1,0 +1,32 @@
+# Claude Code local settings
+.claude
+
+# Python virtual environments
+venv/
+venv_x64/
+.venv/
+env/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# User data (contains real relationship responses — privacy protection)
+us-app/data/
+
+# Streamlit secrets and environment files
+.env
+.env.*
+*.env
+.streamlit/secrets.toml
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# OS artifacts
+.DS_Store
+Thumbs.db
