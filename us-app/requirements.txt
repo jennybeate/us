@@ -1,0 +1,6 @@
+streamlit>=1.32.0
+plotly>=5.18.0
+
+# Note: install via uv on ARM64 Windows (no pyarrow wheel for ARM64):
+# uv venv --python cpython-3.12.12-windows-x86_64-none venv_x64
+# uv pip install streamlit plotly --python venv_x64/Scripts/python.exe
